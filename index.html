@@ -313,7 +313,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/14/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E5%9C%A8%E5%85%A8%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/14/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -327,7 +327,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/14/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E5%9C%A8%E5%85%A8%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">力扣刷题笔记：回溯算法在全排序问题的应用</a>
+            <a href="/2025/10/14/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">力扣刷题笔记：回溯算法及其应用</a>
         </h2>
 
         <div class="post-meta">
@@ -336,10 +336,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-10-14 20:44:43 / Modified: 21:54:39" itemprop="dateCreated datePublished" datetime="2025-10-14T20:44:43-05:00">2025-10-14</time>
+              <time title="Created: 2025-10-14 20:44:43" itemprop="dateCreated datePublished" datetime="2025-10-14T20:44:43-05:00">2025-10-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-31 12:30:52" itemprop="dateModified" datetime="2025-10-31T12:30:52-05:00">2025-10-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -455,13 +461,118 @@
 <li>整体思路总结：</li>
 </ol>
 <ul>
-<li><p>对数组排序，使相同数字相邻，便于去重判断。</p>
+<li>对数组排序，使相同数字相邻，便于去重判断。</li>
+<li>通过 used 数组记录哪些数字已在当前路径中使用。</li>
+<li>使用剪枝条件避免同层中出现重复选择，确保每种排列唯一。</li>
+<li>递归与回溯的过程与无重复版本一致，但多了对重复元素的控制。</li>
+</ul>
+<h1 id="四、回溯算法在组合问题的应用"><a href="#四、回溯算法在组合问题的应用" class="headerlink" title="四、回溯算法在组合问题的应用"></a>四、回溯算法在组合问题的应用</h1><h2 id="题目一：组合总和（无重复元素，可重复使用）"><a href="#题目一：组合总和（无重复元素，可重复使用）" class="headerlink" title="题目一：组合总和（无重复元素，可重复使用）"></a>题目一：组合总和（无重复元素，可重复使用）</h2><ol>
+<li>题目描述<br>给你一个无重复元素的整数数组 candidates 和一个目标整数 target，找出 candidates 中可以使数字和为目标数 target 的所有不同组合。candidates 中的同一个数字可以无限制重复被选取。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：candidates = [2,3,6,7], target = 7</span><br><span class="line">输出：[[2,2,3],[7]]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>题目分析<br>这道题是组合问题的经典变种，与全排列问题的主要区别在于：</li>
+</ol>
+<ul>
+<li>元素顺序不重要：[2,2,3] 和 [2,3,2] 被视为相同组合</li>
+<li>元素可重复使用：同一个数字可以被多次选取</li>
+<li>需要控制起始位置：避免生成重复组合</li>
+</ul>
+<ol start="3">
+<li>核心思路：</li>
+</ol>
+<ul>
+<li>使用 start 参数控制选择范围的起始位置，确保不会回头选择之前的元素。具体来说，只会生成[2,2,3]，确保不会生成 [2,3,2] 这样的重复组合，因为每次从 start 开始，不会回头选择之前的元素。</li>
+<li>不需要 used 数组，因为通过 start 参数已经控制了选择范围。</li>
+<li>递归时传递 i 而不是 i+1（<code>backtrack(i, path, current_sum)</code>），允许重复使用当前元素。</li>
+<li>当当前和等于目标值时记录结果，超过目标值时提前返回。</li>
+</ul>
+<ol start="4">
+<li>完整代码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">combinationSum</span>(<span class="params">self, candidates, target</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type candidates: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrack</span>(<span class="params">start, path, current_sum</span>):</span><br><span class="line">            <span class="comment"># 结束条件：当前和等于目标值</span></span><br><span class="line">            <span class="keyword">if</span> current_sum == target:</span><br><span class="line">                results.append(path[:])</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 剪枝：当前和超过目标值，提前返回</span></span><br><span class="line">            <span class="keyword">if</span> current_sum &gt; target:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 从start开始遍历，避免重复组合</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, <span class="built_in">len</span>(candidates)):</span><br><span class="line">                <span class="comment"># 做选择</span></span><br><span class="line">                path.append(candidates[i])</span><br><span class="line">                current_sum += candidates[i]</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 递归：传递i而不是i+1，允许重复使用当前元素</span></span><br><span class="line">                backtrack(i, path, current_sum)</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 回溯</span></span><br><span class="line">                current_sum -= candidates[i]</span><br><span class="line">                path.pop()</span><br><span class="line">        </span><br><span class="line">        path = []</span><br><span class="line">        current_sum = <span class="number">0</span></span><br><span class="line">        results = []</span><br><span class="line">        backtrack(<span class="number">0</span>, path, current_sum)</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+
+<h2 id="题目二：组合总和-II（含重复元素，不可重复使用）"><a href="#题目二：组合总和-II（含重复元素，不可重复使用）" class="headerlink" title="题目二：组合总和 II（含重复元素，不可重复使用）"></a>题目二：组合总和 II（含重复元素，不可重复使用）</h2><ol>
+<li>题目描述<br>给定一个候选人编号的集合 candidates 和一个目标数 target，找出 candidates 中所有可以使数字和为 target 的组合。candidates 中的每个数字在每个组合中只能使用一次，且解集不能包含重复的组合。</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：candidates = [10,1,2,7,6,1,5], target = 8</span><br><span class="line">输出：</span><br><span class="line">[</span><br><span class="line">[1,1,6],</span><br><span class="line">[1,2,5],</span><br><span class="line">[1,7],</span><br><span class="line">[2,6]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>题目分析<br>这道题相比上一题增加了两个约束：</li>
+</ol>
+<ul>
+<li>元素只能使用一次</li>
+<li>数组中可能包含重复元素</li>
+</ul>
+<ol start="3">
+<li>解决方案：<br>排序：先对数组排序，使相同元素相邻<br>跳过重复元素：在同一层循环中，如果当前元素与前一个相同且前一个未被使用，则跳过</li>
+</ol>
+<p><strong>方法一：使用used数组（直观理解）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">combinationSum2</span>(<span class="params">self, candidates, target</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type candidates: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrack</span>(<span class="params">start, path, current_sum, used</span>):</span><br><span class="line">            <span class="comment"># 结束条件</span></span><br><span class="line">            <span class="keyword">if</span> current_sum == target:</span><br><span class="line">                results.append(path[:])</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> current_sum &gt; target:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, <span class="built_in">len</span>(candidates)):</span><br><span class="line">                <span class="comment"># 剪枝1：已使用的元素</span></span><br><span class="line">                <span class="keyword">if</span> used[i]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 剪枝2：去重关键！跳过同一层的重复元素</span></span><br><span class="line">                <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> candidates[i] == candidates[i-<span class="number">1</span>] <span class="keyword">and</span> <span class="keyword">not</span> used[i-<span class="number">1</span>]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 做选择</span></span><br><span class="line">                path.append(candidates[i])</span><br><span class="line">                used[i] = <span class="literal">True</span></span><br><span class="line">                current_sum += candidates[i]</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 递归：传递i+1，表示不能重复使用当前元素</span></span><br><span class="line">                backtrack(i+<span class="number">1</span>, path, current_sum, used)</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 回溯</span></span><br><span class="line">                current_sum -= candidates[i]</span><br><span class="line">                used[i] = <span class="literal">False</span></span><br><span class="line">                path.pop()</span><br><span class="line">        </span><br><span class="line">        candidates.sort()  <span class="comment"># 关键：先排序</span></span><br><span class="line">        used = [<span class="literal">False</span>] * <span class="built_in">len</span>(candidates)</span><br><span class="line">        path = []</span><br><span class="line">        current_sum = <span class="number">0</span></span><br><span class="line">        results = []</span><br><span class="line">        backtrack(<span class="number">0</span>, path, current_sum, used)</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<p>这种方法沿用了全排列II的思路，使用used数组来标记元素是否被使用。去重条件<code>if i &gt; 0 and candidates[i] == candidates[i-1] and not used[i-1]</code>的含义是：如果当前元素与前一个元素相同，且前一个元素在当前递归层还没有被使用，那么就跳过当前元素。</p>
+<p>这种方法的优点是逻辑清晰，与排列问题的解法保持一致，但需要维护额外的used数组。</p>
+<p><strong>方法二：简化版本</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">combinationSum2</span>(<span class="params">self, candidates, target</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type candidates: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">backtrack</span>(<span class="params">start, path, current_sum</span>):</span><br><span class="line">            <span class="comment"># 结束条件</span></span><br><span class="line">            <span class="keyword">if</span> current_sum == target:</span><br><span class="line">                results.append(path[:])</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> current_sum &gt; target:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start, <span class="built_in">len</span>(candidates)):</span><br><span class="line">                <span class="comment"># 剪枝：跳过同一层的重复元素</span></span><br><span class="line">                <span class="keyword">if</span> i &gt; start <span class="keyword">and</span> candidates[i] == candidates[i-<span class="number">1</span>]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 做选择</span></span><br><span class="line">                path.append(candidates[i])</span><br><span class="line">                current_sum += candidates[i]</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 递归：传递i+1，不能重复使用当前元素</span></span><br><span class="line">                backtrack(i+<span class="number">1</span>, path, current_sum)</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 回溯</span></span><br><span class="line">                current_sum -= candidates[i]</span><br><span class="line">                path.pop()</span><br><span class="line">        </span><br><span class="line">        candidates.sort()  <span class="comment"># 关键：先排序</span></span><br><span class="line">        path = []</span><br><span class="line">        current_sum = <span class="number">0</span></span><br><span class="line">        results = []</span><br><span class="line">        backtrack(<span class="number">0</span>, path, current_sum)</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<p>这是一种更优雅的解法，利用了组合问题的特性。关键的去重条件<code>if i &gt; start and candidates[i] == candidates[i-1]: continue</code><br>其中：</p>
+<ul>
+<li><code>i &gt; start</code>：确保我们只在同一层中跳过重复元素</li>
+<li><code>candidates[i] == candidates[i-1]</code>：当前元素与前一个元素相同</li>
+<li><code>continue</code>：跳过当前元素</li>
+</ul>
+<p><strong>为什么这个方法有效？</strong><br>当i &#x3D;&#x3D; start时，即使当前元素与前一个相同，我们也不跳过，因为这是新分支的开始<br>当i &gt; start时，如果当前元素与前一个相同，说明在同一层中已经考虑过这个值了，应该跳过</p>
+<p><strong>举例说明：</strong><br>对于排序后的数组[1,1,2,5,6,7,10]和target&#x3D;8：</p>
+<ul>
+<li>第一层循环i&#x3D;0，选择第一个1，进入递归</li>
+<li>第二层循环i&#x3D;1，选择第二个1（因为i&#x3D;1 &gt; start&#x3D;1不成立，所以不跳过）</li>
+<li>当回到第一层循环i&#x3D;1时，i&#x3D;1 &gt; start&#x3D;0成立，且第二个1与第一个1相同，所以跳过</li>
+</ul>
+<p>这种方法省去了used数组，代码更简洁，是解决组合去重问题的标准写法。</p>
+<h1 id="五、组合问题与排列问题的对比"><a href="#五、组合问题与排列问题的对比" class="headerlink" title="五、组合问题与排列问题的对比"></a>五、组合问题与排列问题的对比</h1><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>组合问题</th>
+<th>排列问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>元素顺序</strong></td>
+<td>不重要</td>
+<td>重要</td>
+</tr>
+<tr>
+<td><strong>重复判断</strong></td>
+<td>使用start参数</td>
+<td>使用used数组</td>
+</tr>
+<tr>
+<td><strong>去重方式</strong></td>
+<td>跳过同一层重复元素</td>
+<td>跳过未使用的重复元素</td>
+</tr>
+<tr>
+<td><strong>递归参数</strong></td>
+<td>传递i或i+1</td>
+<td>总是从0开始遍历</td>
+</tr>
+</tbody></table>
+<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>回溯算法作为解决组合优化问题的利器，其核心在于”尝试-回溯”的思维模式。通过系统性地探索解空间，并在适当时候剪枝，回溯算法能够高效地找到所有可行解。在掌握了基本模板后，真正的精髓在于根据不同问题的特性进行灵活调整。</p>
+<p>核心技巧精要：</p>
+<ul>
+<li><p>排序定基础：处理含重复元素的问题时，排序是去重的前提。有序数组让相同元素相邻，为后续剪枝创造条件，这是解决去重问题的第一步也是关键一步。</p>
 </li>
-<li><p>通过 used 数组记录哪些数字已在当前路径中使用。</p>
+<li><p>状态管理分情况：排列问题用used数组记录使用状态，组合问题用start参数控制选择范围。理解这个区别是避免重复解的关键——排列关心顺序，需要知道每个元素是否用过；组合不关心顺序，只需保证不回头选择。</p>
 </li>
-<li><p>使用剪枝条件避免同层中出现重复选择，确保每种排列唯一。</p>
+<li><p>去重逻辑抓本质：排列去重关注”前一个相同元素是否未被使用”（not used[i-1]），防止同一层出现相同选择；组合去重关注”是否在同一层且与前一个相同”（i &gt; start），保证每个值在同一层只选一次。这种细微差别正是问题本质的体现。</p>
 </li>
-<li><p>递归与回溯的过程与无重复版本一致，但多了对重复元素的控制。</p>
+<li><p>参数传递见意图：递归时传递i允许重复使用当前元素，传递i+1禁止重复使用，传递start保持选择范围。这个简单的参数变化直接体现了问题的约束条件。</p>
+</li>
+<li><p>剪枝时机抢效率：在组合总和中，当current_sum &gt; target时立即返回，这种提前终止能显著减少不必要的递归调用。好的剪枝策略能让算法效率提升数个量级。</p>
+</li>
+<li><p>路径拷贝保结果：使用path[:]记录结果而非直接引用，这是避免后续操作污染已发现解的保障措施，虽是小细节，却关乎结果正确性。</p>
 </li>
 </ul>
 
